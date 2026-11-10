@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Greeting for You</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="greeting-page">
+    <article class="greeting-card" aria-labelledby="card-title">
+      <form class="greeting-card__form" id="greeting-form">
+        <label class="greeting-card__label" for="occasion">
+          Choose an occasion
+        </label>
+
+        <select class="greeting-card__input" id="occasion" name="occasion" required>
+          <option value="">Select an occasion</option>
+          <option value="birthday">Birthday</option>
+          <option value="wedding">Wedding</option>
+          <option value="anniversary">Anniversary</option>
+          <option value="graduation">Graduation</option>
+          <option value="congratulations">Congratulations</option>
+        </select>
+
+        <label class="greeting-card__label" for="recipient-name">
+          Who is this greeting for?
+        </label>
+
+        <input
+          class="greeting-card__input"
+          id="recipient-name"
+          name="recipientName"
+          type="text"
+          placeholder="Enter their name"
+          autocomplete="name"
+          required
+        >
+
+        <button class="greeting-card__button" type="submit">
+          Show the greeting
+        </button>
+      </form>
+
+      <header class="greeting-card__header">
+        <p class="greeting-card__occasion" id="card-occasion">
+          A little something for you
+        </p>
+        <h1 class="greeting-card__title" id="card-title">
+          Your greeting will appear here
+        </h1>
+      </header>
+
+      <section class="greeting-card__message" aria-label="Greeting message">
+        <p id="personal-greeting" aria-live="polite">
+          Choose an occasion and enter a name to create your greeting.
+        </p>
+        <p id="greeting-wish"></p>
+      </section>
+
+      <footer class="greeting-card__footer">
+        <p class="greeting-card__signoff">With love,</p>
+        <p class="greeting-card__sender">AMIT TIWARI</p>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    const greetingForm = document.querySelector("#greeting-form");
+    const occasionSelect = document.querySelector("#occasion");
+    const nameInput = document.querySelector("#recipient-name");
+    const cardOccasion = document.querySelector("#card-occasion");
+    const cardTitle = document.querySelector("#card-title");
+    const personalGreeting = document.querySelector("#personal-greeting");
+    const greetingWish = document.querySelector("#greeting-wish");
+
+    const greetings = {
+      birthday: {
+        label: "Happy Birthday!",
+        wish: "Hope your day is filled with laughter, lovely surprises, and all the things that make you happy. Wishing you an amazing year ahead!"
+      },
+      wedding: {
+        label: "Congratulations on Your Wedding!",
+        wish: "Wishing you both a lifetime of love, laughter, and wonderful memories together."
+      },
+      anniversary: {
+        label: "Happy Anniversary!",
+        wish: "Wishing you many more years of love, happiness, and beautiful memories together."
+      },
+      graduation: {
+        label: "Congratulations, Graduate!",
+        wish: "Your hard work has paid off. Wishing you success and exciting adventures in this next chapter!"
+      },
+      congratulations: {
+        label: "Congratulations!",
+        wish: "You did it! Wishing you even more success and happiness in everything that comes next."
+      }
+    };
+
+    greetingForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const occasion = occasionSelect.value;
+      const recipientName = nameInput.value.trim();
+
+      if (!occasion || !recipientName) {
+        return;
+      }
+
+      const greeting = greetings[occasion];
+
+      cardOccasion.textContent = greeting.label;
+      cardTitle.textContent = `${greeting.label} ${recipientName}!`;
+      personalGreeting.textContent = `Dear ${recipientName},`;
+      greetingWish.textContent = greeting.wish;
+    });
+  </script>
+</body>
+</html>
